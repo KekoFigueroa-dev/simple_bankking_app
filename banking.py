@@ -2,12 +2,24 @@
 #Project 7.3 Python Banking Application
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+def get_valid_float(prompt):
+    """Get a valid float input from user with error handling"""
+    while True:
+        try:
+            value = float(input(prompt))
+            if value < 0:
+                print("Please enter a positive amount.")
+                continue
+            return value
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+
 def get_info():
     """Create Bank Account dictionary"""
     print("Welcome to the Python Banking Application!")
     name = input("Please enter your name: ").title()
-    savings = float(input("Please enter your initial savings account deposit: $"))
-    checking = float(input("Please enter your initial checking account deposit: $"))
+    savings = get_valid_float("Please enter your initial savings account deposit: $")
+    checking = get_valid_float("Please enter your initial checking account deposit: $")
     
     bank_account = {
         "Name": name,
@@ -20,19 +32,27 @@ def get_info():
 
 def make_transaction(bank_account):
     """Make a deposit or withdrawal on the given account"""
-    account_type = input("Which account would you like to access? (Savings/Checking): ").title()   
-    action = input("What type of transaction would you like to make? ((d)Deposit or (w)Withdrawal): ").lower()
-    money_amount = float(input("Enter the amount of money for the transaction: $"))
-
-    if account_type == "Savings" or account_type == "Checking":
-        if action.startswith('d'):
-            make_deposit(bank_account, account_type, money_amount)
-        elif action.startswith('w'):
-            make_withdrawal(bank_account, account_type, money_amount)
-        else:
-            print("Invalid transaction type. Please try again.")
+    # Improved account type input handling
+    user_input = input("Which account would you like to access? (Savings/Checking): ").strip().lower()
+    
+    # Normalize account type input - handle variations like "savings account", "checking account", "s", "c"
+    if "savings" in user_input or user_input.startswith('s'):
+        account_type = "Savings"
+    elif "checking" in user_input or user_input.startswith('c'):
+        account_type = "Checking"
     else:
         print("Invalid account type. Please try again.")
+        return
+    
+    action = input("What type of transaction would you like to make? ((d)Deposit or (w)Withdrawal): ").lower()
+    money_amount = get_valid_float("Enter the amount of money for the transaction: $")
+
+    if action.startswith('d'):
+        make_deposit(bank_account, account_type, money_amount)
+    elif action.startswith('w'):
+        make_withdrawal(bank_account, account_type, money_amount)
+    else:
+        print("Invalid transaction type. Please try again.")
 
 def make_deposit(bank_account, account_type, money_amount):
     """Add money to a specific type of account"""

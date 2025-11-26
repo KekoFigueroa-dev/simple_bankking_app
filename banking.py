@@ -1,5 +1,8 @@
 #Enhanced Python Banking app
-#Project 7.3 Python Banking Application
+#Originally developed for "The Art Of Doing Python Projects" course
+#Enhanced version with improved input validation and error handling
+#Designed for future integration with Django/Flask for web-based balance storage and management
+#Author: Keko Figueroa
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 def get_valid_float(prompt):
@@ -16,7 +19,7 @@ def get_valid_float(prompt):
 
 def get_info():
     """Create Bank Account dictionary"""
-    print("Welcome to the Python Banking Application!")
+    print("Welcome to Keko's Python Banking App!")
     name = input("Please enter your name: ").title()
     savings = get_valid_float("Please enter your initial savings account deposit: $")
     checking = get_valid_float("Please enter your initial checking account deposit: $")
@@ -103,4 +106,4 @@ while is_running:
     is_running = continue_banking()
 
 display_info(my_account)
-print("Thank you for using the Python Banking Application. Goodbye!")
+print("Thank you for using Keko's Python Banking App. Goodbye!")
